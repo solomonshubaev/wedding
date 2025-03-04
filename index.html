@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Special Day Countdown</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding-top: 50px;
+    }
+    #message {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    #ring {
+      max-width: 300px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="message">Loading...</div>
+  <!-- The image will show on the day of the proposal -->
+  <img id="ring" src="" alt="Wedding Ring" style="display:none;">
+  
+  <script>
+    // Disable right-click context menu
+    document.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+    });
+    
+    // Disable F12 key (Developer Tools)
+    document.addEventListener("keydown", function(e) {
+      if (e.keyCode === 123) { // F12 key code
+        e.preventDefault();
+      }
+    });
+    
+    function updateMessage() {
+      var purposeDate = new Date('2025-03-18T00:00:00');
+      var today = new Date();
+      
+      // Clear the time part for today
+      today.setHours(0, 0, 0, 0);
+      
+      var diffTime = purposeDate - today;
+      var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      var messageEl = document.getElementById('message');
+      var ringEl = document.getElementById('ring');
+      
+      if (diffDays > 5) {
+        messageEl.textContent = "Warming up";
+        messageEl.style.color = "orange";
+        ringEl.style.display = "none";
+      } else if (diffDays <= 5 && diffDays >= 3) {
+        messageEl.textContent = "Soon";
+        messageEl.style.color = "green";
+        ringEl.style.display = "none";
+      } else if (diffDays < 3 && diffDays > 0) {
+        messageEl.textContent = "Very soon :)";
+        messageEl.style.color = "cyan"; // Using cyan as the color (adjust if needed)
+        ringEl.style.display = "none";
+      } else if (diffDays === 0) {
+        // On the proposal day, display the wedding ring image
+        messageEl.textContent = "";
+        // Replace the URL below with a valid URL for your wedding ring image
+        ringEl.src = "https://example.com/your-wedding-ring-image.png";
+        ringEl.style.display = "block";
+      } else {
+        messageEl.textContent = "The special day has passed!";
+      }
+    }
+    
+    updateMessage();
+  </script>
+</body>
+</html>
