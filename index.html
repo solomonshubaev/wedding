@@ -17,6 +17,31 @@
       max-width: 300px;
       margin-top: 20px;
     }
+    .button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+    #waitingButton {
+      background-color: pink;
+      color: white;
+    }
+    #waitingButton:hover {
+      background-color: hotpink;
+      transform: scale(1.1);
+    }
+    #fasterButton {
+      background-color: lightblue;
+      color: black;
+    }
+    #fasterButton:hover {
+      background-color: dodgerblue;
+      transform: scale(1.1);
+    }
   </style>
 </head>
 <body>
@@ -26,28 +51,37 @@
   <div id="message">Loading...</div>
   <img id="ring" src="" alt="Wedding Ring" style="display:none;">
   
+  <button id="waitingButton" class="button">I'm waiting for it</button>
+  <button id="fasterButton" class="button">אני רוצה לזרז את ההצעה</button>
+
   <script>
-    // Disable right-click context menu
+    document.getElementById("waitingButton").addEventListener("click", function() {
+      alert("🎈🎉");
+    });
+
+    document.getElementById("fasterButton").addEventListener("click", function() {
+      alert("נייבאל");
+    });
+
     document.addEventListener("contextmenu", function(e) {
       e.preventDefault();
     });
-    
-    // Disable F12 key (Developer Tools)
+
     document.addEventListener("keydown", function(e) {
       if (e.keyCode === 123) {
         e.preventDefault();
       }
     });
-    
+
     function updateMessage() {
-      var purposeDate = new Date('2025-03-18T00:00:00');
+      var purposeDate = new Date('2025-03-11T00:00:00');
       var today = new Date();
       today.setHours(0, 0, 0, 0);
       var diffTime = purposeDate - today;
       var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       var messageEl = document.getElementById('message');
       var ringEl = document.getElementById('ring');
-      
+
       if (diffDays > 5) {
         messageEl.textContent = "Warming up";
         messageEl.style.color = "orange";
@@ -65,14 +99,14 @@
         messageEl.textContent = "The special day has passed!";
       }
     }
-    
+
     function updateVisitCount() {
       let visitCount = localStorage.getItem('visitCount') || 0;
       visitCount = parseInt(visitCount) + 1;
       localStorage.setItem('visitCount', visitCount);
       document.getElementById('visitCount').textContent = `You have visited this page ${visitCount} times.`;
     }
-    
+
     updateVisitCount();
     updateMessage();
   </script>
